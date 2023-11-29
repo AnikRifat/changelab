@@ -118,11 +118,13 @@ class ExchangeController extends Controller
         }
         $pageTitle = 'Exchange Preview';
         $exchange = Exchange::where('exchange_id', session('EXCHANGE_TRACK'))->with('receivedCurrency.userDetailsData')->firstOrFail();
+
         return view($this->activeTemplate . 'user.exchange.preview', compact('pageTitle', 'exchange'));
     }
 
     public function confirm(Request $request)
     {
+
 
         if (!session()->has('EXCHANGE_TRACK')) {
             $notify[] = ['error', "Invalid session"];
@@ -150,7 +152,9 @@ class ExchangeController extends Controller
         //=====automatic payment
 
         if ($exchange->sendCurrency->gateway_id != 0) {
+
             $curSymbol = $exchange->sendCurrency->cur_sym;
+
             $code = $exchange->sendCurrency->gatewayCurrency->code;
             $gateway = GatewayCurrency::where('method_code', $code)->where('currency', $curSymbol)->first();
 
@@ -175,11 +179,13 @@ class ExchangeController extends Controller
             $deposit->try = 0;
             $deposit->status = 0;
             $deposit->exchange_id = $exchange->id;
+
             $deposit->save();
 
             session()->put('Track', $deposit->trx);
             return to_route('user.deposit.confirm');
         }
+        dd('manual');
 
         return to_route('user.exchange.manual');
     }

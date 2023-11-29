@@ -30,7 +30,6 @@ class PaymentController extends Controller
         $data = $new::process($deposit);
         $data = json_decode($data);
 
-
         if (isset($data->error)) {
             $notify[] = ['error', $data->message];
             return to_route(gatewayRedirectUrl())->withNotify($notify);
@@ -59,29 +58,29 @@ class PaymentController extends Controller
             $user = $deposit->user;
 
             if ($deposit->exchange) {
-                $exchange                           = $deposit->exchange;
+                $exchange = $deposit->exchange;
                 $exchange->automatic_payment_status = Status::YES;
-                $exchange->status                   = Status::EXCHANGE_PENDING;
+                $exchange->status = Status::EXCHANGE_PENDING;
                 $exchange->save();
             }
 
             if (!$isManual) {
-                $adminNotification            = new AdminNotification();
-                $adminNotification->user_id   = $user->id;
-                $adminNotification->title     = 'Deposit successful via ' . $deposit->gatewayCurrency()->name;
+                $adminNotification = new AdminNotification();
+                $adminNotification->user_id = $user->id;
+                $adminNotification->title = 'Deposit successful via ' . $deposit->gatewayCurrency()->name;
                 $adminNotification->click_url = '#';
                 $adminNotification->save();
             }
 
             notify($user, $isManual ? 'DEPOSIT_APPROVE' : 'DEPOSIT_COMPLETE', [
-                'method_name'     => $deposit->gatewayCurrency()->name,
+                'method_name' => $deposit->gatewayCurrency()->name,
                 'method_currency' => $deposit->method_currency,
-                'method_amount'   => showAmount($deposit->final_amo),
-                'amount'          => showAmount($deposit->amount),
-                'charge'          => showAmount($deposit->charge),
-                'rate'            => showAmount($deposit->rate),
-                'trx'             => $deposit->trx,
-                'post_balance'    => showAmount($user->balance)
+                'method_amount' => showAmount($deposit->final_amo),
+                'amount' => showAmount($deposit->amount),
+                'charge' => showAmount($deposit->charge),
+                'rate' => showAmount($deposit->rate),
+                'trx' => $deposit->trx,
+                'post_balance' => showAmount($user->balance)
             ]);
         }
     }
@@ -89,15 +88,15 @@ class PaymentController extends Controller
     public function manualDepositConfirm()
     {
         $track = session()->get('Track');
-        $data  = Deposit::with('gateway')->where('status', Status::PAYMENT_INITIATE)->where('trx', $track)->first();
+        $data = Deposit::with('gateway')->where('status', Status::PAYMENT_INITIATE)->where('trx', $track)->first();
         if (!$data) {
             return to_route(gatewayRedirectUrl());
         }
         if ($data->method_code > 999) {
 
             $pageTitle = 'Deposit Confirm';
-            $method    = $data->gatewayCurrency();
-            $gateway   = $method->method;
+            $method = $data->gatewayCurrency();
+            $gateway = $method->method;
             return view($this->activeTemplate . 'user.payment.manual', compact('data', 'pageTitle', 'method', 'gateway'));
         }
         abort(404);
@@ -106,15 +105,15 @@ class PaymentController extends Controller
     public function manualDepositUpdate(Request $request)
     {
         $track = session()->get('Track');
-        $data  = Deposit::with('gateway')->where('status', Status::PAYMENT_INITIATE)->where('trx', $track)->first();
+        $data = Deposit::with('gateway')->where('status', Status::PAYMENT_INITIATE)->where('trx', $track)->first();
         if (!$data) {
             return to_route(gatewayRedirectUrl());
         }
         $gatewayCurrency = $data->gatewayCurrency();
-        $gateway         = $gatewayCurrency->method;
-        $formData        = $gateway->form->form_data;
+        $gateway = $gatewayCurrency->method;
+        $formData = $gateway->form->form_data;
 
-        $formProcessor  = new FormProcessor();
+        $formProcessor = new FormProcessor();
         $validationRule = $formProcessor->valueValidation($formData);
         $request->validate($validationRule);
         $userData = $formProcessor->processFormData($request, $formData);
@@ -124,20 +123,20 @@ class PaymentController extends Controller
         $data->save();
 
 
-        $adminNotification            = new AdminNotification();
-        $adminNotification->user_id   = $data->user->id;
-        $adminNotification->title     = 'Deposit request from ' . $data->user->username;
+        $adminNotification = new AdminNotification();
+        $adminNotification->user_id = $data->user->id;
+        $adminNotification->title = 'Deposit request from ' . $data->user->username;
         $adminNotification->click_url = urlPath('admin.deposit.details', $data->id);
         $adminNotification->save();
 
         notify($data->user, 'DEPOSIT_REQUEST', [
-            'method_name'     => $data->gatewayCurrency()->name,
+            'method_name' => $data->gatewayCurrency()->name,
             'method_currency' => $data->method_currency,
-            'method_amount'   => showAmount($data->final_amo),
-            'amount'          => showAmount($data->amount),
-            'charge'          => showAmount($data->charge),
-            'rate'            => showAmount($data->rate),
-            'trx'             => $data->trx
+            'method_amount' => showAmount($data->final_amo),
+            'amount' => showAmount($data->amount),
+            'charge' => showAmount($data->charge),
+            'rate' => showAmount($data->rate),
+            'trx' => $data->trx
         ]);
 
         $notify[] = ['success', 'You have deposit request has been taken'];

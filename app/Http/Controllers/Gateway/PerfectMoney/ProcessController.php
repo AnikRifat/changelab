@@ -23,10 +23,10 @@ class ProcessController extends Controller
         $val['PAYEE_ACCOUNT'] = trim($perfectAcc->wallet_id);
         $val['PAYEE_NAME'] = $basic->site_name;
         $val['PAYMENT_ID'] = "$deposit->trx";
-        $val['PAYMENT_AMOUNT'] = round($deposit->final_amo,2);
+        $val['PAYMENT_AMOUNT'] = round($deposit->final_amo, 2);
         $val['PAYMENT_UNITS'] = "$deposit->method_currency";
 
-        $val['STATUS_URL'] = route('ipn.'.$deposit->gateway->alias);
+        $val['STATUS_URL'] = route('ipn.' . $deposit->gateway->alias);
         $val['PAYMENT_URL'] = route(gatewayRedirectUrl(true));
         $val['PAYMENT_URL_METHOD'] = 'POST';
         $val['NOPAYMENT_URL'] = route(gatewayRedirectUrl());
@@ -39,7 +39,6 @@ class ProcessController extends Controller
         $send['view'] = 'user.payment.redirect';
         $send['method'] = 'post';
         $send['url'] = 'https://perfectmoney.is/api/step1.asp';
-
         return json_encode($send);
     }
     public function ipn()
@@ -71,7 +70,7 @@ class ProcessController extends Controller
             $amo = $_POST['PAYMENT_AMOUNT'];
             $unit = $_POST['PAYMENT_UNITS'];
             $track = $_POST['PAYMENT_ID'];
-            if ($_POST['PAYEE_ACCOUNT'] == $pmAcc->wallet_id && $unit == $deposit->method_currency && $amo == round($deposit->final_amo,2) && $deposit->status == Status::PAYMENT_INITIATE) {
+            if ($_POST['PAYEE_ACCOUNT'] == $pmAcc->wallet_id && $unit == $deposit->method_currency && $amo == round($deposit->final_amo, 2) && $deposit->status == Status::PAYMENT_INITIATE) {
                 //Update User Data
                 PaymentController::userDataUpdate($deposit);
             }

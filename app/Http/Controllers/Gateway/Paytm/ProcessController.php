@@ -16,6 +16,7 @@ class ProcessController extends Controller
 
     public static function process($deposit)
     {
+        dd('proccess');
         $PayTmAcc = json_decode($deposit->gatewayCurrency()->gateway_parameter);
 
 
@@ -35,9 +36,9 @@ class ProcessController extends Controller
         }
 
         $val['ORDER_ID'] = $deposit->trx;
-        $val['TXN_AMOUNT'] = round($deposit->final_amo,2);
+        $val['TXN_AMOUNT'] = round($deposit->final_amo, 2);
         $val['CUST_ID'] = $deposit->user_id;
-        $val['CALLBACK_URL'] = route('ipn.'.$alias);
+        $val['CALLBACK_URL'] = route('ipn.' . $alias);
         $val['CHECKSUMHASH'] = $checkSumHash;
 
         $send['val'] = $val;
@@ -49,7 +50,7 @@ class ProcessController extends Controller
     }
     public function ipn()
     {
-
+        dd('ipn');
         $deposit = Deposit::where('trx', $_POST['ORDERID'])->orderBy('id', 'DESC')->first();
         $PayTmAcc = json_decode($deposit->gatewayCurrency()->gateway_parameter);
         $ptm = new PayTM();
@@ -69,10 +70,10 @@ class ProcessController extends Controller
                     $notify[] = ['error', 'It seems some issue in server to server communication. Kindly connect with administrator'];
                 }
             } else {
-                $notify[] = ['error',  $_POST['RESPMSG']];
+                $notify[] = ['error', $_POST['RESPMSG']];
             }
         } else {
-            $notify[] = ['error',  'Security error!'];
+            $notify[] = ['error', 'Security error!'];
         }
         return to_route(gatewayRedirectUrl())->withNotify($notify);
     }

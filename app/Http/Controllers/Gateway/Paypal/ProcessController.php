@@ -22,10 +22,10 @@ class ProcessController extends Controller
         $val['quantity'] = 1;
         $val['item_name'] = "Payment To $basic->site_name Account";
         $val['custom'] = "$deposit->trx";
-        $val['amount'] = round($deposit->final_amo,2);
+        $val['amount'] = round($deposit->final_amo, 2);
         $val['return'] = route(gatewayRedirectUrl(true));
         $val['cancel_return'] = route(gatewayRedirectUrl());
-        $val['notify_url'] = route('ipn.'.$deposit->gateway->alias);
+        $val['notify_url'] = route('ipn.' . $deposit->gateway->alias);
         $send['val'] = $val;
         $send['view'] = 'user.payment.redirect';
         $send['method'] = 'post';
@@ -36,6 +36,7 @@ class ProcessController extends Controller
 
     public function ipn()
     {
+        dd('ipn');
         $raw_post_data = file_get_contents('php://input');
         $raw_post_array = explode('&', $raw_post_data);
         $myPost = array();
@@ -62,7 +63,7 @@ class ProcessController extends Controller
             $deposit->detail = $details;
             $deposit->save();
 
-            if ($_POST['mc_gross'] == round($deposit->final_amo,2) && $deposit->status == Status::PAYMENT_INITIATE) {
+            if ($_POST['mc_gross'] == round($deposit->final_amo, 2) && $deposit->status == Status::PAYMENT_INITIATE) {
                 PaymentController::userDataUpdate($deposit);
             }
         }
