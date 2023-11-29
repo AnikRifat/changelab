@@ -1,0 +1,296 @@
+{
+    "banner": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Banner Section",
+        "content": {
+            "images": {
+                "background_image": {
+                    "size": "1200x685"
+                }
+            },
+            "heading": "text",
+            "subheading": "text"
+        }
+    },
+    "header": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Header Section",
+        "content": {
+            "address": "text",
+            "email": "text",
+            "mobile": "text"
+        }
+    },
+    "breadcrumb": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Breadcrumb Section",
+        "content": {
+            "images": {
+                "background_image": {
+                    "size": "850x650"
+                }
+            }
+        }
+    },
+    "feature": {
+        "builder": true,
+        "name": "Feature Section",
+        "content": {
+            "heading": "text",
+            "subheading": "text"
+        },
+        "element": {
+            "title": "text",
+            "description": "textarea",
+            "feature_icon": "icon",
+            "modal": true
+        }
+    },
+    "currency_info": {
+        "builder": true,
+        "name": "Currency Information",
+        "content": {
+            "heading": "text",
+            "subheading": "text"
+        }
+    },
+    "counter": {
+        "builder": true,
+        "name": "Counter Section",
+        "content": {
+            "images": {
+                "background_image": {
+                    "size": "1200x335"
+                }
+            }
+        },
+        "element": {
+            "title": "text",
+            "counter_digit": "text",
+            "counter_abbreviation": "text",
+            "counter_icon": "icon",
+            "modal": true
+        }
+    },
+    "how_it_work": {
+        "builder": true,
+        "name": "How It Works Section",
+        "content": {
+            "heading": "text",
+            "subheading": "text"
+        },
+        "element": {
+            "icon": "icon",
+            "title": "text",
+            "subtitle": "text",
+            "modal": true
+        }
+    },
+    "faq": {
+        "builder": true,
+        "name": "FAQ Section",
+        "content": {
+            "images": {
+                "faq_image": {
+                    "size": "600x600"
+                }
+            },
+            "heading": "text",
+            "subheading": "text"
+        },
+        "element": {
+            "question": "text",
+            "answer": "textarea",
+            "modal": false
+        }
+    },
+    "latest_exchange": {
+        "builder": true,
+        "name": "Latest Exchange Section",
+        "content": {
+            "heading": "text",
+            "subheading": "text"
+        }
+    },
+    "testimonial": {
+        "builder": true,
+        "name": "Testimonial Section",
+        "content": {
+            "heading": "text",
+            "subheading": "text"
+        },
+        "element": {
+            "name": "text",
+            "designation": "text",
+            "description": "textarea",
+            "modal": true
+        }
+    },
+    "blog": {
+        "builder": true,
+        "name": "Blog Section",
+        "content": {
+            "heading": "text",
+            "subheading": "text"
+        },
+        "element": {
+            "images": {
+                "blog_image": {
+                    "size": "820x440",
+                    "thumb": "410x220"
+                }
+            },
+            "title": "text",
+            "description": "textarea-nic",
+            "modal": false
+        }
+    },
+    "subscribe": {
+        "builder": true,
+        "name": "Subscribe Section",
+        "content": {
+            "images": {
+                "background_image": {
+                    "size": "600x360"
+                }
+            },
+            "heading": "text",
+            "subheading": "text"
+        }
+    },
+    "footer": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Footer Section",
+        "content": {
+            "details": "text",
+            "copyright": "text"
+        }
+    },
+    "about": {
+        "builder": true,
+        "name": "About Us",
+        "content": {
+            "images": {
+                "about_image": {
+                    "size": "500x500",
+                    "thumb": "100x100"
+                }
+            },
+            "heading": "text",
+            "subheading": "text",
+            "description": "textarea-nic"
+        }
+    },
+    "mission_vision": {
+        "builder": true,
+        "no_selection": false,
+        "name": "Mission & Vision ",
+        "element": {
+            "images": {
+                "image": {
+                    "size": "1000x675"
+                }
+            },
+            "heading": "text",
+            "subheading": "text",
+            "description": "textarea-nic",
+            "modal": false
+        }
+    },
+    "affiliation": {
+        "builder": true,
+        "no_selection": false,
+        "name": "Affiliation",
+        "content": {
+            "heading": "text",
+            "subheading": "text"
+        },
+        "element": {
+            "level": "text",
+            "commission": "text",
+            "description": "textarea",
+            "modal": true
+        }
+    },
+    "policy_pages": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Policy Section",
+        "element": {
+            "title": "text",
+            "description": "textarea-nic",
+            "modal": false
+        }
+    },
+    "contact_us": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Contact Us",
+        "content": {
+            "heading": "text",
+            "subheading": "text"
+        }
+    },
+    "kyc_content": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Kyc content section",
+        "content": {
+            "unverified_content": "textarea",
+            "pending_content": "textarea"
+        }
+    },
+    "social_icons": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Social Icon Section",
+        "element": {
+            "name": "text",
+            "icon": "icon",
+            "url": "text",
+            "modal": true
+        }
+    },
+    "banned": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Banned Page",
+        "content": {
+            "images": {
+                "image": {
+                    "size": "700x400"
+                }
+            },
+            "heading": "text"
+        }
+    },
+    "register": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Register Page",
+        "content": {
+            "heading": "text"
+        }
+    },
+    "login": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Login Page",
+        "content": {
+            "heading": "text"
+        }
+    },
+    "trustpilot_review":{
+        "builder":true,
+        "name":"Trustpilot Review",
+        "content":{
+            "heading":"text",
+            "subheading":"text"
+        },
+        "modal":true
+    }
+}
