@@ -43,14 +43,18 @@ class PaymentController extends Controller
             $deposit->btc_wallet = $data->session->id;
             $deposit->save();
         }
+      
 
         $pageTitle = 'Payment Confirm';
         return view($this->activeTemplate . $data->view, compact('data', 'pageTitle', 'deposit'));
     }
 
 
-    public static function userDataUpdate($deposit, $isManual = null)
-    {
+    public static function
+        userDataUpdate(
+        $deposit,
+        $isManual = null
+    ) {
         if ($deposit->status == Status::PAYMENT_INITIATE || $deposit->status == Status::PAYMENT_PENDING) {
             $deposit->status = Status::PAYMENT_SUCCESS;
             $deposit->save();

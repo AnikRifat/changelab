@@ -36,7 +36,6 @@ class ProcessController extends Controller
 
     public function ipn()
     {
-        dd('ipn');
         $raw_post_data = file_get_contents('php://input');
         $raw_post_array = explode('&', $raw_post_data);
         $myPost = array();

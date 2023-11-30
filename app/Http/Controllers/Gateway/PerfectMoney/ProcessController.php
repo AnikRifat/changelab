@@ -19,7 +19,7 @@ class ProcessController extends Controller
         $gateway_currency = $deposit->gatewayCurrency();
 
         $perfectAcc = json_decode($gateway_currency->gateway_parameter);
-
+        // dd($perfectAcc);
         $val['PAYEE_ACCOUNT'] = trim($perfectAcc->wallet_id);
         $val['PAYEE_NAME'] = $basic->site_name;
         $val['PAYMENT_ID'] = "$deposit->trx";

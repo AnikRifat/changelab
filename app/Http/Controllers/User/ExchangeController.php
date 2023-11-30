@@ -185,7 +185,6 @@ class ExchangeController extends Controller
             session()->put('Track', $deposit->trx);
             return to_route('user.deposit.confirm');
         }
-        dd('manual');
 
         return to_route('user.exchange.manual');
     }
