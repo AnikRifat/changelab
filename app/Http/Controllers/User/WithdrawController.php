@@ -16,15 +16,16 @@ class WithdrawController extends Controller
 
     public function withdrawMoney()
     {
-        $pageTitle  = 'Withdraw Money';
+        $pageTitle = 'Withdraw Money';
         $currencies = Currency::enabled()->where('available_for_buy', Status::YES)->get();
         return view($this->activeTemplate . 'user.withdraw.methods', compact('pageTitle', 'currencies'));
     }
 
     public function withdrawStore(Request $request)
     {
+        // dd($request->all());
         $request->validate([
-            'currency'    => 'required',
+            'currency' => 'required',
             'send_amount' => 'required|numeric|gte:0',
         ]);
 
@@ -38,7 +39,7 @@ class WithdrawController extends Controller
         $currency = Currency::enabled()->availableForSell()->where('id', $request->currency)->firstOrFail();
         $formData = @$currency->userDetailsData->form_data ?? null;
 
-        $formProcessor  = new FormProcessor();
+        $formProcessor = new FormProcessor();
         $validationRule = $formProcessor->valueValidation($formData);
         $request->validate($validationRule);
         $formValue = $formProcessor->processFormData($request, $formData);
@@ -55,41 +56,41 @@ class WithdrawController extends Controller
         }
 
         $getAmount = $request->send_amount / $currency->sell_at;
-        $charge    = $currency->fixed_charge_for_sell + ($getAmount * $currency->percent_charge_for_sell / 100);
-        $general   = gs();
+        $charge = $currency->fixed_charge_for_sell + ($getAmount * $currency->percent_charge_for_sell / 100);
+        $general = gs();
 
-        $withdraw                       = new Withdrawal();
-        $withdraw->method_id            = $currency->id;
-        $withdraw->user_id              = $user->id;
-        $withdraw->amount               = $request->send_amount;
-        $withdraw->currency             = $general->cur_text;
-        $withdraw->rate                 = $currency->sell_at;
-        $withdraw->charge               = $charge;
-        $withdraw->final_amount         = $getAmount;
-        $withdraw->after_charge         = $getAmount - $charge;
-        $withdraw->trx                  = getTrx();
-        $withdraw->status               = 2;
+        $withdraw = new Withdrawal();
+        $withdraw->method_id = $currency->id;
+        $withdraw->user_id = $user->id;
+        $withdraw->amount = $request->send_amount;
+        $withdraw->currency = $general->cur_text;
+        $withdraw->rate = $currency->sell_at;
+        $withdraw->charge = $charge;
+        $withdraw->final_amount = $getAmount;
+        $withdraw->after_charge = $getAmount - $charge;
+        $withdraw->trx = getTrx();
+        $withdraw->status = 2;
         $withdraw->withdraw_information = $formValue;
         $withdraw->save();
 
         $user->balance -= $withdraw->amount;
         $user->save();
 
-        $adminNotification            = new AdminNotification();
-        $adminNotification->user_id   = $user->id;
-        $adminNotification->title     = 'New withdraw request from ' . $user->username;
+        $adminNotification = new AdminNotification();
+        $adminNotification->user_id = $user->id;
+        $adminNotification->title = 'New withdraw request from ' . $user->username;
         $adminNotification->click_url = urlPath('admin.withdraw.details', $withdraw->id);
         $adminNotification->save();
 
         notify($user, 'WITHDRAW_REQUEST', [
-            'method_name'     => $withdraw->method->name,
+            'method_name' => $withdraw->method->name,
             'method_currency' => $withdraw->currency,
-            'method_amount'   => showAmount($withdraw->final_amount),
-            'amount'          => showAmount($withdraw->amount),
-            'charge'          => showAmount($withdraw->charge),
-            'rate'            => showAmount($withdraw->rate),
-            'trx'             => $withdraw->trx,
-            'post_balance'    => showAmount($user->balance),
+            'method_amount' => showAmount($withdraw->final_amount),
+            'amount' => showAmount($withdraw->amount),
+            'charge' => showAmount($withdraw->charge),
+            'rate' => showAmount($withdraw->rate),
+            'trx' => $withdraw->trx,
+            'post_balance' => showAmount($user->balance),
         ]);
 
         $notify[] = ['success', 'Please wait for admin approval'];
@@ -98,7 +99,7 @@ class WithdrawController extends Controller
 
     public function withdrawDetails($trx)
     {
-        $withdraw  = Withdrawal::with('method', 'user')->where('trx', $trx)->where('user_id', auth()->id())->orderBy('id', 'desc')->firstOrFail();
+        $withdraw = Withdrawal::with('method', 'user')->where('trx', $trx)->where('user_id', auth()->id())->orderBy('id', 'desc')->firstOrFail();
         $pageTitle = 'Withdraw Details';
         return view($this->activeTemplate . 'user.withdraw.details', compact('pageTitle', 'withdraw'));
     }
@@ -127,17 +128,17 @@ class WithdrawController extends Controller
             ]);
         }
 
-        $formData  = @$currency->userDetailsData->form_data ?? null;
-        $html      = $formData ? view('components.viser-form', compact('formData'))->render() : '';
+        $formData = @$currency->userDetailsData->form_data ?? null;
+        $html = $formData ? view('components.viser-form', compact('formData'))->render() : '';
         $minAmount = $currency->minimum_limit_for_sell * $currency->sell_at;
         $maxAmount = $currency->maximum_limit_for_sell * $currency->sell_at;
 
         return response()->json([
-            'success'    => true,
+            'success' => true,
             'min_amount' => showAmount($minAmount),
             'max_amount' => showAmount($maxAmount),
-            'html'       => $html,
-            'cur_sym'    => $currency->cur_sym,
+            'html' => $html,
+            'cur_sym' => $currency->cur_sym,
         ]);
     }
 }

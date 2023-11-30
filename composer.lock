@@ -4,8 +4,61 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e9e95f55244092035c34bc7ed0bdf518",
+    "content-hash": "472b3c2f0143ea4ac44d2e9b2a0fca72",
     "packages": [
+        {
+            "name": "adman9000/laravel-binance",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/adman9000/laravel-binance.git",
+                "reference": "d0e1acf8fb2af42597156e0baaeeac0f029bf912"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/adman9000/laravel-binance/zipball/d0e1acf8fb2af42597156e0baaeeac0f029bf912",
+                "reference": "d0e1acf8fb2af42597156e0baaeeac0f029bf912",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "laravel/framework": ">=5.3",
+                "php": ">=5.6.4"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "adman9000\\binance\\BinanceServiceProvider"
+                    ],
+                    "aliases": {
+                        "Binance": "adman9000\\binance\\BinanceAPIFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "adman9000\\binance\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Adam Harding",
+                    "email": "myaddressistaken@googlemail.com"
+                }
+            ],
+            "description": "Implementation of Binance trading API for Laravel",
+            "support": {
+                "issues": "https://github.com/adman9000/laravel-binance/issues",
+                "source": "https://github.com/adman9000/laravel-binance/tree/master"
+            },
+            "time": "2018-08-19T18:16:19+00:00"
+        },
         {
             "name": "authorizenet/authorizenet",
             "version": "2.0.2",

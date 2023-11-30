@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "adman9000/laravel-binance": "dev-master",
         "authorizenet/authorizenet": ">=1.9.3",
         "barryvdh/laravel-dompdf": "^2.0",
         "coingate/coingate-php": "^3.0",
